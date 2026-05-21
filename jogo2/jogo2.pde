@@ -11,7 +11,7 @@ int enemyDir = 1;
 int tela = 0;
 // 0 = início
 // 1 = jogo
-// 2 = game over
+// 2 = derrota
 // 3 = vitória
 
 void setup() {
@@ -37,7 +37,7 @@ void draw() {
   }
 
   if (tela == 3) {
-    telaFim("VOCÊ VENCEU!");
+    telaFim("VITORIA");
     return;
   }
 
@@ -142,15 +142,23 @@ void telaFim(String mensagem) {
   fill(255);
   textAlign(CENTER);
 
-  textSize(42);
-  text(mensagem, width/2, 220);
+  if (mensagem.equals("GAME OVER")) {
+    textSize(40);
+    text("VOCÊ PERDEU!", width/2, 190);
+
+    textSize(22);
+    text("Os asteroides chegaram perto demais.", width/2, 250);
+  } else {
+    textSize(40);
+    text("VOCÊ VENCEU!", width/2, 210);
+  }
 
   textSize(22);
-  text("Pontuação: " + score, width/2, 280);
+  text("Pontuação: " + score, width/2, 310);
 
   textSize(20);
-  text("Pressione R para recomeçar", width/2, 360);
-  text("Pressione ENTER para voltar ao início", width/2, 395);
+  text("Pressione R para jogar novamente", width/2, 380);
+  text("Pressione ENTER para voltar ao início", width/2, 415);
 }
 
 void keyPressed() {
