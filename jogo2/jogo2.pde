@@ -1,5 +1,9 @@
+import processing.sound.*;
+
 PImage imgAsteroide;
 PImage imgNave;
+
+SoundFile musica;
 
 Player player;
 ArrayList<Bullet> bullets = new ArrayList<Bullet>();
@@ -19,6 +23,9 @@ void setup() {
 
   imgAsteroide = loadImage("asteroide.png");
   imgNave = loadImage("nave.png");
+
+  musica = new SoundFile(this, "musica.mp3");
+  musica.loop();
 
   iniciarJogo();
 }
