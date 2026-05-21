@@ -6,8 +6,13 @@ ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
 int score = 0;
-boolean gameOver = false;
 int enemyDir = 1;
+
+int tela = 0;
+// 0 = início
+// 1 = jogo
+// 2 = game over
+// 3 = vitória
 
 void setup() {
   size(600, 600);
@@ -15,26 +20,24 @@ void setup() {
   imgAsteroide = loadImage("asteroide.png");
   imgNave = loadImage("nave.png");
 
-  player = new Player();
-
-  for (int y = 0; y < 4; y++) {
-    for (int x = 0; x < 8; x++) {
-      enemies.add(new Enemy(70 + x * 60, 60 + y * 45));
-    }
-  }
+  iniciarJogo();
 }
 
 void draw() {
   background(10);
 
-  if (gameOver) {
-    fill(255);
-    textAlign(CENTER);
-    textSize(40);
-    text("GAME OVER", width/2, height/2);
+  if (tela == 0) {
+    telaInicio();
+    return;
+  }
 
-    textSize(20);
-    text("Pontuação: " + score, width/2, height/2 + 40);
+  if (tela == 2) {
+    telaFim("GAME OVER");
+    return;
+  }
+
+  if (tela == 3) {
+    telaFim("VOCÊ VENCEU!");
     return;
   }
 
@@ -79,7 +82,7 @@ void draw() {
     }
 
     if (e.y > height - 80) {
-      gameOver = true;
+      tela = 2;
     }
   }
 
@@ -96,14 +99,79 @@ void draw() {
   }
 
   if (enemies.size() == 0) {
-    fill(255);
-    textAlign(CENTER);
-    textSize(35);
-    text("VOCÊ VENCEU!", width/2, height/2);
+    tela = 3;
   }
 }
 
+void iniciarJogo() {
+  player = new Player();
+
+  bullets.clear();
+  enemies.clear();
+
+  score = 0;
+  enemyDir = 1;
+
+  for (int y = 0; y < 4; y++) {
+    for (int x = 0; x < 8; x++) {
+      enemies.add(new Enemy(70 + x * 60, 60 + y * 45));
+    }
+  }
+}
+
+void telaInicio() {
+  background(5, 5, 20);
+
+  fill(255);
+  textAlign(CENTER);
+
+  textSize(42);
+  text("SPACE ASTEROIDS", width/2, 180);
+
+  textSize(20);
+  text("Use as setas para mover a nave", width/2, 260);
+  text("Aperte ESPAÇO para atirar", width/2, 295);
+
+  textSize(24);
+  text("Pressione ENTER para começar", width/2, 390);
+}
+
+void telaFim(String mensagem) {
+  background(5, 5, 20);
+
+  fill(255);
+  textAlign(CENTER);
+
+  textSize(42);
+  text(mensagem, width/2, 220);
+
+  textSize(22);
+  text("Pontuação: " + score, width/2, 280);
+
+  textSize(20);
+  text("Pressione R para recomeçar", width/2, 360);
+  text("Pressione ENTER para voltar ao início", width/2, 395);
+}
+
 void keyPressed() {
+  if (tela == 0 && keyCode == ENTER) {
+    tela = 1;
+  }
+
+  if ((tela == 2 || tela == 3) && (key == 'r' || key == 'R')) {
+    iniciarJogo();
+    tela = 1;
+  }
+
+  if ((tela == 2 || tela == 3) && keyCode == ENTER) {
+    iniciarJogo();
+    tela = 0;
+  }
+
+  if (tela != 1) {
+    return;
+  }
+
   if (keyCode == LEFT) {
     player.movingLeft = true;
   }
@@ -118,6 +186,10 @@ void keyPressed() {
 }
 
 void keyReleased() {
+  if (tela != 1) {
+    return;
+  }
+
   if (keyCode == LEFT) {
     player.movingLeft = false;
   }
