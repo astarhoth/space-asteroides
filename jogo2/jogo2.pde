@@ -12,7 +12,6 @@ PImage imgVitoria3;
 PImage imgGameOver2;
 PImage imgGameOver3;
 PImage imgCapa;
-PImage imgFinal;
 PImage[] imgFios = new PImage[3];
 
 SoundFile musica;
@@ -66,7 +65,6 @@ void setup() {
   imgNave = loadImage("nave.png");
   imgHistoria = loadImage("historia.png");
   imgCapa = loadImage("capa.png");
-  imgFinal = loadImage("final.png");
   imgJogador = loadImage("personagem.png");
   imgVitoria1 = loadImage("vitoria1.png");
   imgGameOver = loadImage("GameOver.png");
@@ -225,16 +223,6 @@ void telaGameOver3() {
   }
 }
 
-void telaVitoriaFinal() {
-
-  image(imgFinal, 0, 0, width, height);
-
-  fill(255);
-  textAlign(CENTER);
-  textSize(24);
-
-  text("Pontuação: " + score, width/2, 520);
-}
 
 //////////////// FASE 1: LABIRINTO //////////////////
 
