@@ -89,12 +89,9 @@ if (tela == 4) { telaHistoria(); return; }
 if (tela == 2) { telaGameOver(); return; }
 if (tela == 3) { telaVitoria1(); return; }
 if (tela == 6) { telaVitoria2(); return; }
-if (tela == 8) { telaVitoriaFinal(); return; }
-
 if (tela == 9) { telaGameOver2(); return; }
 if (tela == 10) { telaGameOver3(); return; }
 if (tela == 11) { telaVitoria3(); return; }
-
 if (tela == 1) { fase1(); return; }
 if (tela == 5) { fase2(); return; }
 if (tela == 7) { fase3(); return; }
